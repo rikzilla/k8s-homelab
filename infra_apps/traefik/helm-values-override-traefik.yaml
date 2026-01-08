@@ -1,0 +1,89 @@
+---
+####################################
+# ⛵ Helm Values - Chart Settings  #
+####################################
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: helm-values-override-traefik
+  namespace: traefik
+data:
+  values.yaml: |-
+    # Default values for traefik.
+    # This is a YAML-formatted file.
+    # Declare variables to be passed into your templates.
+
+    global:
+      checkNewVersion: false
+      sendAnonymousUsage: false
+
+    additionalArguments:
+      - "--serversTransport.insecureSkipVerify=true"
+      - "--log.level=INFO"
+      - "--entryPoints.mailrise.address=:8025/tcp"
+      - "--entryPoints.web-passthrough.address=:9443/tcp"
+
+    deployment:
+      enabled: true
+      replicas: 3
+      annotations: {}
+      podAnnotations: {}
+      additionalContainers: []
+      initContainers: []
+
+    ports:
+      web:
+        redirections:
+          entryPoint:
+            to: websecure
+            scheme: https
+            permanent: true
+            priority: 10
+      websecure:
+        http3:
+          enabled: true
+        advertisedPort: 4443
+        tls:
+          enabled: true
+      web-passthrough:
+        port: 9443
+        exposedPort: 9443
+        protocol: TCP
+      mailrise:
+        port: 8025
+        exposedPort: 8025
+        protocol: TCP        
+
+    entryPoints:
+      web-passthrough:
+        address: ":9443/tcp"
+      mailrise:
+        address: ":8025/tcp"
+        
+    ingressRoute:
+      dashboard:
+        enabled: false
+
+    providers:
+      kubernetesCRD:
+        enabled: true
+        ingressClass: traefik
+        allowExternalNameServices: true
+      kubernetesIngress:
+        enabled: true
+        allowExternalNameServices: true
+        publishedService:
+          enabled: false
+
+    rbac:
+      enabled: true
+
+    service:
+      enabled: true
+      type: LoadBalancer
+      annotations: {}
+      labels: {}
+      spec:
+        loadBalancerIP: 172.16.20.30
+      loadBalancerSourceRanges: []
+      externalIPs: []

@@ -1,0 +1,39 @@
+# Flux decryption keys (CRITICAL - never commit these)
+*.asc
+*.key
+sops.agekey
+age.agekey
+
+# Helm charts (downloaded locally, not needed in repo)
+charts/
+*.tgz
+
+# Kubernetes secrets (if you accidentally generate any)
+*secret*.yaml
+*Secret*.yaml
+
+# Kustomize build output
+kustomization.yaml.bak
+
+# IDE/Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Personal notes
+notes.md
+TODO.md
+scratch/
+
+# Other files
