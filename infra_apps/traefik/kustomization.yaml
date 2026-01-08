@@ -1,0 +1,16 @@
+---
+#######################################
+# 🧩 Kustomization - FluxCD Resource  #
+#######################################
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: traefik
+  namespace: flux-system
+resources:
+  - definitions-traefik.yaml
+  - helmrelease-traefik.yaml
+  - helm-values-override-traefik.yaml
+  - ingress-traefik-dashboard.yaml
+  # Middlewares
+  - middlewares/middleware-traefik-dashboard.yaml
