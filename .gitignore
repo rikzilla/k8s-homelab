@@ -8,9 +8,15 @@ age.agekey
 charts/
 *.tgz
 
-# Kubernetes secrets (if you accidentally generate any)
 *secret*.yaml
 *Secret*.yaml
+!*external-secret*
+!*External-secret*
+!*External-Secret*
+!*externalsecret*
+!*externalSecret*
+!*ExternalSecret*
+!/infra_apps/external-secrets/*
 
 # Kustomize build output
 kustomization.yaml.bak
@@ -36,4 +42,4 @@ notes.md
 TODO.md
 scratch/
 
-# Other files
+# Other paths
