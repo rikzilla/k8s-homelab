@@ -22,5 +22,4 @@ spec:
         - name: api@internal
           kind: TraefikService
   tls:
-    {}
-    # secretName: traefik-islandbytes-net-prod-tls
+    secretName: traefik-islandbytes-net-prod-tls
