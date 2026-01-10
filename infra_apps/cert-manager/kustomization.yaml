@@ -1,0 +1,13 @@
+---
+#######################################
+# 🧩 Kustomization - FluxCD Resource  #
+#######################################
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: cert-manager
+  namespace: flux-system
+resources:
+  - helmrelease-cert-manager.yaml
+  - helm-values-override-cert-manager.yaml
+  - externalsecret-cloudflare-api-token-secret.yaml
