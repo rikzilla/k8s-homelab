@@ -10,6 +10,7 @@ charts/
 
 *secret*.yaml
 *Secret*.yaml
+!*shared-secrets*
 !*external-secret*
 !*External-secret*
 !*External-Secret*
