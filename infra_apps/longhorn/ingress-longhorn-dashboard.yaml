@@ -1,0 +1,24 @@
+---
+########################################
+# 🔀 IngressRoute - Traefik CRD Route  #
+########################################
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: longhorn-frontend
+  namespace: longhorn-system
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`longhorn.islandbytes.net`)
+      kind: Rule
+      services:
+        - name: longhorn-frontend
+          port: 80
+      middlewares:
+        - name: default-headers
+  tls:
+    secretName: longhorn-islandbytes-net-prod-tls
