@@ -1,0 +1,17 @@
+---
+#########################################
+# 🌐 DNSEndpoint - ExternalDNS Record  #
+#########################################
+# A CNAME record maps a domain name to another domain, often used for aliases.
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: example-cname-record
+  namespace: external-dns
+spec:
+  endpoints:
+  - dnsName: example-cname.domain.net
+    recordTTL: 180
+    recordType: CNAME
+    targets:
+    - traefik.domain.net

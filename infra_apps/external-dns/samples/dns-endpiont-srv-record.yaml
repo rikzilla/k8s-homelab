@@ -1,0 +1,17 @@
+---
+#########################################
+# 🌐 DNSEndpoint - ExternalDNS Record  #
+#########################################
+# An SRV record defines the host and port for specific services like SIP or LDAP.
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: example-srv-record
+  namespace: external-dns
+spec:
+  endpoints:
+  - dnsName: _sip._tcp.domain.net
+    recordTTL: 180
+    recordType: SRV
+    targets:
+    - "10 5 5060 sipserver.domain.net"
