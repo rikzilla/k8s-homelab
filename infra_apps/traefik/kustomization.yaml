@@ -15,3 +15,4 @@ resources:
   - ingress-traefik-dashboard.yaml
   # Middlewares
   - middlewares/middleware-traefik-dashboard.yaml
+  - middlewares/middleware-longhorn-default-headers.yaml

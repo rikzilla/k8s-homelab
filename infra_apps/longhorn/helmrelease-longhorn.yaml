@@ -1,0 +1,25 @@
+---
+##########################################
+# 🚀 HelmRelease - Chart Deployment Spec #
+##########################################
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: longhorn
+  namespace: longhorn-system
+spec:
+  chart:
+    spec:
+      chart: longhorn
+      version: 1.10.1
+      sourceRef:
+        kind: HelmRepository
+        name: longhorn
+        namespace: flux-system
+  interval: 15m
+  timeout: 5m
+  releaseName: longhorn
+  valuesFrom:
+  - kind: ConfigMap
+    name: helm-values-override-longhorn
+    valuesKey: values.yaml
