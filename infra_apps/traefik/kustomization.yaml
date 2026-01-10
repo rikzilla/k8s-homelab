@@ -9,6 +9,7 @@ metadata:
   namespace: flux-system
 resources:
   - definitions-traefik.yaml
+  - dns-endpoint-traefik.yaml
   - externalsecret-traefik-dashboard-auth.yaml
   - helmrelease-traefik.yaml
   - helm-values-override-traefik.yaml
