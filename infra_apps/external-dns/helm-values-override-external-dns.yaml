@@ -294,7 +294,7 @@ data:
                 name: external-dns-adguard-config
                 key: ADGUARD_PASSWORD
           - name: LOG_LEVEL
-            value: info
+            value: debug
           - name: DRY_RUN
             value: "false"
         # -- Extra arguments to provide for the `webhook` container.
