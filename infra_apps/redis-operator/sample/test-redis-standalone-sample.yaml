@@ -1,0 +1,47 @@
+---
+#########################################################
+# 🟧 Redis Standalone Resource (via OT Redis Operator) #
+#########################################################
+apiVersion: redis.redis.opstreelabs.in/v1beta2
+kind: Redis
+metadata:
+  name: redis-standalone-sample
+  namespace: redis-system
+
+spec:
+  #########################################################
+  # 🐳 Redis Image & Auth
+  #########################################################
+  kubernetesConfig:
+    # Use Redis image for 
+    image: quay.io/opstree/redis:v8.4.0@sha256:539924b2c1446dcdea2f043af2c50bed7516623254e4984a6d926df42eb359b2
+    imagePullPolicy: IfNotPresent
+    redisSecret:
+      name: redis-auth-secret
+      key: password
+
+  #########################################################
+  # 🔐 Pod Security Context for PVC write-access
+  #########################################################
+  podSecurityContext:
+    fsGroup: 1000
+
+  #########################################################
+  # 📈 Metrics Exporter Sidecar for Prometheus
+  #########################################################
+  redisExporter:
+    enabled: true
+    image: docker.io/bitnami/redis-exporter:latest@sha256:1c55ee340300d1e75a13d3fca2ae7cd3fe6a1882737f963c66bf742e0ab5f942
+    imagePullPolicy: IfNotPresent
+
+  #########################################################
+  # 💾 Storage Configuration (Longhorn PVC)
+  #########################################################
+  storage:
+    volumeClaimTemplate:
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: longhorn
+        resources:
+          requests:
+            storage: 1Gi
