@@ -1,0 +1,17 @@
+---
+#########################################
+# 🌐 DNSEndpoint - ExternalDNS Record  #
+#########################################
+# An A record maps a domain name to an IPv4 address.
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: traefik.islandbytes.net
+  namespace: external-dns
+spec:
+  endpoints:
+  - dnsName: traefik.islandbytes.net
+    recordTTL: 180
+    recordType: A
+    targets:
+    - 172.16.20.30 
