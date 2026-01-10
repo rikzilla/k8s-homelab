@@ -65,7 +65,13 @@ data:
       # -- If `true`, create a `ClusterRole` & `ClusterRoleBinding` with access to the Kubernetes API.
       create: true
       # -- Additional rules to add to the `ClusterRole`.
-      additionalPermissions: []
+      additionalPermissions:
+        - apiGroups: ["externaldns.k8s.io"]
+          resources: ["dnsendpoints"]
+          verbs: ["get", "watch", "list"]
+        - apiGroups: ["externaldns.k8s.io"]
+          resources: ["dnsendpoints/status"]
+          verbs: ["update"]
 
     # -- Annotations to add to the `Deployment`.
     deploymentAnnotations: {}
@@ -223,6 +229,7 @@ data:
     sources:
       - service
       - ingress
+      - crd
 
     # -- How DNS records are synchronized between sources and providers; available values are `create-only`, `sync`, & `upsert-only`.
     policy: upsert-only  # @schema enum:[create-only, sync, upsert-only]; type:string; default: "upsert-only"
