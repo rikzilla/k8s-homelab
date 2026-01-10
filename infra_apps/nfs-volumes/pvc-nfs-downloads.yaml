@@ -1,0 +1,17 @@
+########################################
+# 💾 PVC - Persistent Volume Claim     #
+########################################
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-nfs-downloads-homelab-media
+  namespace: homelab-media
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 4Ti
+  volumeName: pv-nfs-downloads    # Match PV name
+  storageClassName: local-path    # Match PV storage class
