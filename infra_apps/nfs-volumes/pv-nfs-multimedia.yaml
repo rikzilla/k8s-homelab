@@ -1,0 +1,21 @@
+########################################
+# 💾 PV - Persistent Volume           #
+########################################
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-nfs-multimedia
+spec:
+  capacity:
+    storage: 4Ti
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    path: /mnt/data-pool/media
+    server: 172.16.20.9
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-path
+  mountOptions:
+    - hard
+    - nfsvers=4.2
