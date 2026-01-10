@@ -1,0 +1,16 @@
+---
+##################################################
+# 🧩 Kustomization - FluxCD Resource             #
+##################################################
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: external-secrets
+  namespace: flux-system
+resources:
+  - clustersecretstore-openbao.yaml
+  - helmrelease-external-secrets.yaml
+  - helm-values-override-external-secrets.yaml
+  - rbac-external-secrets-openbao-auth.yaml
+  - serviceaccount-external-secrets-eso-openbao.yaml
+  - serviceaccount-token-external-secrets.yaml
