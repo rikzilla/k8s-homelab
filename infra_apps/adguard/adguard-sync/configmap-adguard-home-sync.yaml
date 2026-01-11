@@ -1,0 +1,30 @@
+---
+########################################
+# 🛠️ ConfigMap - Key-Value Config Data #
+########################################
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: adguard-home-sync-config
+  namespace: adguard-home
+data:
+  TZ: "Australia/Melbourne"
+  CRON: "*/5 * * * *"
+  RUN_ON_START: "true"
+
+  # Origin
+  ORIGIN_URL: "http://adguard-home.adguard-home.svc.cluster.local:3000"
+
+  # Replica 1
+  REPLICA1_URL: "http://172.16.20.1:3000"
+
+  # Feature Flags
+  FEATURES_DNS_SERVER_CONFIG: "false"
+  FEATURES_DNS_ACCESS_LISTS: "true"
+  FEATURES_DNS_REWRITES: "true"
+  FEATURES_GENERAL_SETTINGS: "true"
+  FEATURES_QUERY_LOG: "true"
+  FEATURES_STATS_CONFIG: "true" 
+  FEATURES_CLIENT_SETTINGS: "true"
+  FEATURES_FILTERS: "true"
+

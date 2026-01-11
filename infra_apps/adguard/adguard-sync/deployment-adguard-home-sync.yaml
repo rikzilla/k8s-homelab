@@ -1,0 +1,67 @@
+---
+############################################
+# 📦 Kubernetes Deployment (Pod + Spec)
+############################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adguard-home-sync
+  namespace: adguard-home
+  labels:
+    app: adguard-home
+    component: sync
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: adguard-home
+      component: sync
+  template:
+    metadata:
+      labels:
+        app: adguard-home
+        component: sync
+    spec:
+      initContainers:
+        # ⏳ Init Container (Wait for Dependencies)
+        - name: wait-for-adguard-home
+          image: pnnlmiscscripts/curl-jq:1.7.1-2@sha256:3a48264708da7ce046926ba78f5ca1c69368ab0d2c2739fde26b49019efff9ff
+          command:
+            - sh
+            - -c
+            - |
+              echo "🔎 Checking: AdGuard Home availability..."
+              until curl -fsS http://adguard-home.adguard-home.svc.cluster.local:3000 \
+                | grep -q "login.html"; do
+                echo "⏳ Waiting: AdGuard Home not yet ready, retrying..."
+                sleep 2
+              done
+              echo "✅ Success: AdGuard Home is reachable and responding."
+      containers:
+        # 🔄  AdguardHome Sync
+      - name: adguard-home-sync
+        image: ghcr.io/bakito/adguardhome-sync:v0.8.2@sha256:0d8411bfaae9e1e368b9a5ca8f3df28e8f0a335e9975003cc47892c22524ca15
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          readOnlyRootFilesystem: true
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "1Gi"
+          requests:
+            cpu: "250m"
+            memory: "512Mi"
+        envFrom:
+        - configMapRef:
+            name: adguard-home-sync-config
+        - secretRef:
+            name: adguard-home-sync-auth 
+        ports:
+        - name: http
+          containerPort: 8080

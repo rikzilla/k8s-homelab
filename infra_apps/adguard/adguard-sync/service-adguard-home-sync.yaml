@@ -1,0 +1,19 @@
+---
+########################################
+# 🛰️ Service - Cluster Networking Rule #
+########################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: adguard-home-sync
+  namespace: adguard-home
+  labels:
+    app: adguard-home
+    component: sync
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
