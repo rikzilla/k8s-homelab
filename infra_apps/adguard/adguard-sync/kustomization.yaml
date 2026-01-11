@@ -11,4 +11,4 @@ resources:
   - configmap-adguard-home-sync.yaml
   - deployment-adguard-home-sync.yaml
   - externalsecret-adguard-home-sync.yaml
-  - service-adguard-home-sync.yaml.
+  - service-adguard-home-sync.yaml
