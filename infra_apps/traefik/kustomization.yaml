@@ -17,3 +17,4 @@ resources:
   # Middlewares
   - middlewares/middleware-traefik-dashboard.yaml
   - middlewares/middleware-longhorn-default-headers.yaml
+  - middlewares/middleware-adguard-home-frontend.yaml

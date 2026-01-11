@@ -1,0 +1,86 @@
+---
+############################################
+# 📦 Kubernetes Deployment (Pod + Spec)
+############################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adguard-home
+  namespace: adguard-home
+  labels:
+    app: adguard-home
+    component: core
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: adguard-home
+      component: core
+  template:
+    metadata:
+      labels:
+        app: adguard-home
+        component: core
+    spec:
+      containers:
+      # 🔄  Adguard Home
+      - name: adguard-home
+        image: adguard/adguardhome:v0.107.71@sha256:92929135ced2554aaf94706f766a98ad348f211df61b0704e2db7e8498cc00b7
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "1Gi"
+          requests:
+            cpu: "250m"
+            memory: "512Mi"
+        envFrom:
+          - configMapRef:
+              name: adguard-home-config
+        ports:
+        # Core DNS
+        - name: dns-tcp
+          containerPort: 53
+          protocol: TCP
+        - name: dns-udp
+          containerPort: 53
+          protocol: UDP
+        # HTTPS/DNS-over-HTTPS
+        - name: http
+          containerPort: 80
+          protocol: TCP
+        - name: https-tcp
+          containerPort: 443
+          protocol: TCP
+        - name: https-udp
+          containerPort: 443
+          protocol: UDP
+        # Setup/WebUI
+        - name: webui-tcp
+          containerPort: 3000
+          protocol: TCP
+        # DNS-over-TLS
+        - name: dot-tcp
+          containerPort: 853
+          protocol: TCP
+        # DNS-over-QUIC
+        - name: doq-udp
+          containerPort: 853
+          protocol: UDP
+        - name: doq-alt-udp
+          containerPort: 8853
+          protocol: UDP
+        volumeMounts:
+        - name: adguard-home-config
+          mountPath: /opt/adguardhome/conf
+        - name: adguard-home-work
+          mountPath: /opt/adguardhome/work
+      volumes:
+      - name: adguard-home-config
+        persistentVolumeClaim:
+          claimName: pvc-adguard-home-config
+      - name: adguard-home-work
+        persistentVolumeClaim:
+          claimName: pvc-adguard-home-work

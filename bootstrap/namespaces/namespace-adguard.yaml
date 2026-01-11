@@ -1,0 +1,12 @@
+---
+######################################
+# 🌐 Namespace - Resource Isolation #
+######################################
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: adguard-home
+  labels:
+    pod-security.kubernetes.io/enforce: baseline
+    pod-security.kubernetes.io/audit: baseline
+    pod-security.kubernetes.io/warn: baseline

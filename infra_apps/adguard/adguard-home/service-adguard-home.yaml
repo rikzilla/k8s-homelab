@@ -1,0 +1,58 @@
+---
+########################################
+# 🛰️ Service - Cluster Networking Rule #
+########################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: adguard-home
+  namespace: adguard-home
+  labels:
+    app: adguard-home
+    component: core
+spec:
+  type: ClusterIP
+  ports:
+    # Core DNS
+    - name: dns-tcp
+      port: 53
+      targetPort: 53
+      protocol: TCP
+    - name: dns-udp
+      port: 53
+      targetPort: 53
+      protocol: UDP
+    # HTTPS/DNS-over-HTTPS
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP    
+    - name: https-tcp
+      port: 443
+      targetPort: 443
+    - name: https-udp
+      port: 443
+      targetPort: 443
+      protocol: UDP
+    # Setup/WebUI
+    - name: setup
+      port: 3000
+      targetPort: 3000
+      protocol: TCP
+    # DNS-over-TLS
+    - name: dot-tcp
+      port: 853
+      targetPort: 853
+      protocol: TCP
+    # DNS-over-QUIC
+    - name: doq-udp
+      port: 853 
+      targetPort: 853
+      protocol: UDP
+    - name: doq-alt-udp
+      port: 8853
+      targetPort: 8853
+      protocol: UDP
+  selector:
+    app: adguard-home
+    component: core

@@ -1,0 +1,11 @@
+---
+########################################
+# 🛠️ ConfigMap - Key-Value Config Data #
+########################################
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: adguard-home-config
+  namespace: adguard-home
+data:
+  TZ: "Australia/Melbourne"

@@ -1,0 +1,33 @@
+---
+########################################
+# 💾 PVC - Persistent Volume Claim     #
+########################################
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-adguard-home-config
+  namespace: adguard-home
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: longhorn
+
+---
+########################################
+# 💾 PVC - Persistent Volume Claim     #
+########################################
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-adguard-home-work
+  namespace: adguard-home
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: longhorn
