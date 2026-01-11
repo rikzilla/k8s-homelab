@@ -1,0 +1,25 @@
+---
+########################################
+# 🔀 IngressRoute - Traefik CRD Route  #
+########################################
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: adguard-home
+  namespace: adguard-home
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`adguard-0.islandbytes.net`)
+      middlewares:
+        - name: default-headers
+          namespace: adguard-home
+      services:
+        - name: adguard-home
+          port: 3000
+  tls:
+    secretName: adguard-islandbytes-net-prod-tls
