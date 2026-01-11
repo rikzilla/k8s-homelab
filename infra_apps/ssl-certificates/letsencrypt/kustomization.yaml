@@ -8,5 +8,7 @@ metadata:
   name: ssl-certificates
   namespace: flux-system
 resources:
-  - cert-traefik-islandbytes-net-prod.yaml
   - cert-wildcard-islandbytes-net-prod.yaml
+  - cert-traefik-islandbytes-net-prod.yaml
+  - cert-longhorn-islandbytes-net-prod.yaml
+  - cert-adguard-islandbytes-net-prod.yaml
